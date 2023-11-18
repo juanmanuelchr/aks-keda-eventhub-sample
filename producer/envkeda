@@ -1,0 +1,6 @@
+export KAFKA_EVENTHUB_CONNECTION_STRING="Endpoint=sb://kedans.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=0v+1OG/65zumXeoYqWZ/Qo22APf3/c8rR+AEhIz2REM="
+export KAFKA_EVENTHUB_ENDPOINT=kedans.servicebus.windows.net:9093
+export KAFKA_EVENTHUB_CONSUMER_GROUP=group_keda
+export KAFKA_EVENTHUB_TOPIC=keda
+export KAFKA_EVENTHUB_USERNAME="\$ConnectionString"
+

@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: eventhub-kafka-triggerauth
+  namespace: keda
+spec:
+  secretTargetRef:
+    - parameter: username
+      name: eventhub-kafka-credentials
+      key: username
+    - parameter: password
+      name: eventhub-kafka-credentials
+      key: password
+    #- key: sasl
+    #  name: eventhub-kafka-credentials
+    #  parameter: sasl
+    - key: tls
+      name: eventhub-kafka-credentials
+      parameter: tls

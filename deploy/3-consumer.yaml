@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+  namespace: keda
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+        - name: kafka-consumer
+          image: rmagalla3004/consumer-kafka:0.2
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_EVENTHUB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: eventhub-kafka-credentials
+                  key: password
+            - name: KAFKA_EVENTHUB_ENDPOINT
+              value: kedans.servicebus.windows.net:9093
+            - name: KAFKA_EVENTHUB_CONSUMER_GROUP
+              value: group_keda
+            - name: KAFKA_EVENTHUB_TOPIC
+              value: keda
