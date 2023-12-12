@@ -1,4 +1,4 @@
-# Autoscalind KEDA - Kafka / Event Hubs
+# Autoscaling KEDA - Kafka / Event Hubs
 
 ## Crear recursos
 En la carpeta **keda/deploy** crear:
