@@ -2,15 +2,18 @@
 
 This guide describes how can be Kafka Consumer application autoscaled by KEDA on Kubernetes. The application is being scaled based on lag in the Kafka topic. If there isn't any traffic the application is autoscaled to 0 replicas, if there's some load the number of replicas is being scaled up until the number of partitions.
 
-This resources have been tested Azure Environment using Azure Event Hubs as Apache Kafka provider, but it could be modified to connect any existing apache Kafka.
+This resources have been tested Azure Environment using Azure Event Hubs as Apache Kafka provider, but it could be modified to connect any existing Apache Kafka.
 
 This demo leverage KEDA Apache Kafka scaler, you can see the documentation here: https://keda.sh/docs/2.12/scalers/apache-kafka/
+
+### Diagram:
+![Diagram](images/diagram.png?raw=true "Autoscaling of Kafka Consumer application")
 
 ## 0. Provisioning Azure Event Hubs within a consumer group and topic
 
 ## 1. Install KEDA
 
-Follow the steps in KEDA Documentation for installing KEDA using Helm in any Kubernetes cluster: https://keda.sh/docs/2.12/deploy/#helm 
+Follow the steps in KEDA Documentation for installing KEDA using Helm (https://helm.sh/) in any Kubernetes cluster: https://keda.sh/docs/2.12/deploy/#helm 
 
 ## 2. Create namespace for the demo
 Create "keda-demo" namespace: 
@@ -19,7 +22,7 @@ Create "keda-demo" namespace:
 kubectl create ns keda-demo
  ```
 
-## 2. Deploy Kafka Consumer application
+## 3. Deploy Kafka Consumer application
 
 Create the secret with the base64 credentials for connecting Kafka/Azure Event Hubs:
 
@@ -40,10 +43,30 @@ kubectl -n keda-demo logs deployment.apps/kafka-consumer
 
 You should see similar output logs:
  ```bash
-
+2023/12/15 22:49:11 KAFKA_EVENTHUB_ENDPOINT - kedans.servicebus.windows.net:9093
+2023/12/15 22:49:11 KAFKA_EVENTHUB_CONSUMER_GROUP - group_keda
+2023/12/15 22:49:11 KAFKA_EVENTHUB_TOPIC - keda
+%7|1702680551.062|INIT|rdkafka#consumer-1| [thrd:app]: librdkafka v1.4.0 (0x10400ff) rdkafka#consumer-1 initialized (builtin.features gzip,snappy,ssl,sasl,regex,lz4,sasl_plain,sasl_scram,plugins,zstd,sasl_oauthbearer, STATIC_LINKING CC GXX PKGCONFIG INSTALL GNULD LDS LIBDL PLUGINS ZLIB SSL ZSTD HDRHISTOGRAM SYSLOG SNAPPY SOCKEM SASL_SCRAM SASL_OAUTHBEARER CRC32C_HW, debug 0x2000)
+%7|1702680551.062|SUBSCRIBE|rdkafka#consumer-1| [thrd:main]: Group "group_keda": subscribe to new subscription of 1 topics (join state init)
+%7|1702680551.062|REBALANCE|rdkafka#consumer-1| [thrd:main]: Group "group_keda" is rebalancing in state init (join-state init) without assignment: unsubscribe
+2023/12/15 22:49:11 press ctrl+c to exit
+2023/12/15 22:49:11 waiting for messages...
+%7|1702680552.338|JOIN|rdkafka#consumer-1| [thrd:main]: Group "group_keda": postponing join until up-to-date metadata is available
+%7|1702680552.343|REJOIN|rdkafka#consumer-1| [thrd:main]: Group "group_keda": subscription updated from metadata change: rejoining group
+%7|1702680552.343|REBALANCE|rdkafka#consumer-1| [thrd:main]: Group "group_keda" is rebalancing in state up (join-state init) without assignment: group rejoin
+%7|1702680554.062|JOIN|rdkafka#consumer-1| [thrd:main]: sasl_ssl://kedans.servicebus.windows.net:9093/0: Joining group "group_keda" with 1 subscribed topic(s)
+%7|1702680557.016|ASSIGNOR|rdkafka#consumer-1| [thrd:main]: Group "group_keda": "range" assignor run for 1 member(s)
+%7|1702680557.044|ASSIGN|rdkafka#consumer-1| [thrd:main]: Group "group_keda": new assignment of 20 partition(s) in join state wait-assign-rebalance_cb
+%7|1702680557.044|OFFSET|rdkafka#consumer-1| [thrd:main]: GroupCoordinator/0: Fetch committed offsets for 20/20 partition(s)
+%7|1702680557.078|FETCH|rdkafka#consumer-1| [thrd:main]: Partition keda [0] start fetching at offset 386
+%7|1702680557.078|FETCH|rdkafka#consumer-1| [thrd:main]: Partition keda [1] start fetching at offset 320
+%7|1702680557.079|FETCH|rdkafka#consumer-1| [thrd:main]: Partition keda [2] start fetching at offset 265
+%7|1702680557.079|FETCH|rdkafka#consumer-1| [thrd:main]: Partition keda [3] start fetching at offset 257
+%7|1702680557.079|FETCH|rdkafka#consumer-1| [thrd:main]: Partition keda [4] start fetching at offset 327
+...
  ```
 
-## 3. 
+## 4. 
 
 ## Crear recursos
 En la carpeta **keda/deploy** crear:
