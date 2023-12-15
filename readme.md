@@ -1,4 +1,49 @@
-# Autoscaling KEDA - Kafka / Event Hubs
+# Autoscaling Kafka Consumer Application using KEDA
+
+This guide describes how can be Kafka Consumer application autoscaled by KEDA on Kubernetes. The application is being scaled based on lag in the Kafka topic. If there isn't any traffic the application is autoscaled to 0 replicas, if there's some load the number of replicas is being scaled up until the number of partitions.
+
+This resources have been tested Azure Environment using Azure Event Hubs as Apache Kafka provider, but it could be modified to connect any existing apache Kafka.
+
+This demo leverage KEDA Apache Kafka scaler, you can see the documentation here: https://keda.sh/docs/2.12/scalers/apache-kafka/
+
+## 0. Provisioning Azure Event Hubs within a consumer group and topic
+
+## 1. Install KEDA
+
+Follow the steps in KEDA Documentation for installing KEDA using Helm in any Kubernetes cluster: https://keda.sh/docs/2.12/deploy/#helm 
+
+## 2. Create namespace for the demo
+Create "keda-demo" namespace: 
+
+ ```bash
+kubectl create ns keda-demo
+ ```
+
+## 2. Deploy Kafka Consumer application
+
+Create the secret with the base64 credentials for connecting Kafka/Azure Event Hubs:
+
+ ```bash
+kubectl apply -f deploy/1-secret.yaml
+ ```
+
+Deploy Kafka Consumer application with the following command:
+
+ ```bash
+kubectl apply -f deploy/2-kafka-consumer.yaml
+ ```
+
+Check the consumer has been able to connect to Kafka (Azure Event Hubs):
+ ```bash
+kubectl -n keda-demo logs deployment.apps/kafka-consumer
+ ```
+
+You should see similar output logs:
+ ```bash
+
+ ```
+
+## 3. 
 
 ## Crear recursos
 En la carpeta **keda/deploy** crear:
