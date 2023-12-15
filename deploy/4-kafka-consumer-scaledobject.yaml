@@ -1,15 +1,18 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: kafka-scaledobject
-  namespace: keda
+  name: kafka-consumer-scaledobject
+  namespace: keda-demo
   labels:
     deploymentName: kafka-consumer
 spec:
   scaleTargetRef:
     name: kafka-consumer
-  pollingInterval: 15
-  cooldownPeriod: 60
+  pollingInterval: 5
+  cooldownPeriod: 10
+  fallback:
+    failureThreshold: 3
+    replicas: 2
   triggers:
     - type: kafka
       metadata:

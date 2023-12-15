@@ -2,7 +2,7 @@ apiVersion: keda.sh/v1alpha1
 kind: TriggerAuthentication
 metadata:
   name: eventhub-kafka-triggerauth
-  namespace: keda
+  namespace: keda-demo
 spec:
   secretTargetRef:
     - parameter: username

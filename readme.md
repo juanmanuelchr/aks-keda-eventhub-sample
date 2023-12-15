@@ -50,3 +50,7 @@ https://github.com/abhirockzz/keda-eventhubs-kafka
 https://dev.to/azure/how-to-auto-scale-kafka-applications-on-kubernetes-with-keda-1k9n
 
 
+Check 
+```bash
+kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/keda-demo/s0-kafka-keda?labelSelector=scaledobject.keda.sh%2Fname%3Dkafka-scaledobject"
+```
