@@ -76,7 +76,36 @@ You should see similar output logs:
 ...
  ```
 
-## 4. 
+## 4. Deploy ScaleObject for enabling Autoscaling with KEDA for Kafka Consumer application
+
+First, we have to create Trigger Authentication object needed for Scaled Object
+```bash
+kubectl apply -f deploy/3-trigger-auth.yaml
+```
+
+Create the ScaledObject with the following command:
+```bash
+kubectl apply -f deploy/4-kafka-consumer-scaledobject.yaml
+```
+
+Check that KEDA has been able to access metrics and is correctly defined for autoscaling:
+```bash
+kubectl -n keda-demo get scaledobject kafka-consumer-scaledobject
+```
+You should see similar output, `READY` should be `True`:
+```bash
+NAME                          SCALETARGETKIND      SCALETARGETNAME   MIN   MAX   TRIGGERS   AUTHENTICATION               READY   ACTIVE   FALLBACK   PAUSED    AGE
+kafka-consumer-scaledobject   apps/v1.Deployment   kafka-consumer                kafka      eventhub-kafka-triggerauth   True    True     False      Unknown   66s
+```
+Since there aren't any messages in the Kafka topic, the Kafka Consumer application should be autoscaled to zero, run the following command:
+```bash
+kubectl -n keda-demo get deployments.apps/kafka-consumer
+```
+You should see a similar output, Deployment `kafka-consumer` has been autoscaled to 0 replicas:
+```bash
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+kafka-consumer   0/0     0            0           44s
+```
 
 ## Crear recursos
 En la carpeta **keda/deploy** crear:
