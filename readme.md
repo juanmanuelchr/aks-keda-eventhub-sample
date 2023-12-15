@@ -35,12 +35,22 @@ Deploy Kafka Consumer application with the following command:
  ```bash
 kubectl apply -f deploy/2-kafka-consumer.yaml
  ```
+Check the status of the Deployment kafka-consumer:
+
+```bash
+kubectl -n keda-demo get deployment.apps/kafka-consumer
+ ```
+
+You should see similar output
+```bash
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+kafka-consumer   1/1     1            1           6m41s
+```
 
 Check the consumer has been able to connect to Kafka (Azure Event Hubs):
  ```bash
 kubectl -n keda-demo logs deployment.apps/kafka-consumer
  ```
-
 You should see similar output logs:
  ```bash
 2023/12/15 22:49:11 KAFKA_EVENTHUB_ENDPOINT - kedans.servicebus.windows.net:9093
