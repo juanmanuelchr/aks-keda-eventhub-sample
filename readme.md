@@ -107,12 +107,11 @@ NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 kafka-consumer   0/0     0            0           44s
 ```
 
-## Crear recursos
-En la carpeta **keda/deploy** crear:
-kubeclt apply -f
+## 5. Run Kafka producer 
 
-### Generar eventos
-Requisitos instalar go
+Note: You need to install Go runtime. Look Golang documentation.
+
+Go to the "producer" directory:
 
 En la carpeta **keda/producer**
 - Exportar las variables del archivo *envkeda*
