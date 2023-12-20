@@ -159,5 +159,5 @@ https://dev.to/azure/how-to-auto-scale-kafka-applications-on-kubernetes-with-ked
 
 Check 
 ```bash
-kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/keda-demo/s0-kafka-keda?labelSelector=scaledobject.keda.sh%2Fname%3Dkafka-scaledobject"
+kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1/namespaces/keda-demo/s0-kafka-keda?labelSelector=scaledobject.keda.sh%2Fname%3Dkafka-consumer-scaledobject"
 ```
