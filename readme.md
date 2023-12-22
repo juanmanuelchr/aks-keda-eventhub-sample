@@ -82,6 +82,7 @@ First, we have to create Trigger Authentication object needed for Scaled Object
 ```bash
 kubectl apply -f deploy/3-trigger-auth.yaml
 ```
+<sub>Note: This Trigger Authentication object uses the Secret created in the Step 3.</sub>
 
 Create the ScaledObject with the following command:
 ```bash
