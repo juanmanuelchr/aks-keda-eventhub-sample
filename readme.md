@@ -16,7 +16,7 @@ This demo leverage KEDA Apache Kafka scaler, you can see the documentation here:
 Follow the steps in KEDA Documentation for installing KEDA using Helm (https://helm.sh/) in any Kubernetes cluster: https://keda.sh/docs/2.12/deploy/#helm 
 
 ## 2. Create namespace for the demo
-Create "keda-demo" namespace: 
+Create `keda-demo` namespace: 
 
  ```bash
 kubectl create ns keda-demo
@@ -84,7 +84,7 @@ kubectl apply -f deploy/3-trigger-auth.yaml
 ```
 <sub>Note: This Trigger Authentication object uses the Secret created in the Step 3.</sub>
 
-Create the ScaledObject with the following command:
+Create the `ScaledObject` with the following command:
 ```bash
 kubectl apply -f deploy/4-kafka-consumer-scaledobject.yaml
 ```
@@ -110,22 +110,35 @@ kafka-consumer   0/0     0            0           44s
 
 ## 5. Run Kafka producer 
 
-Note: You need to install Go runtime. Look Golang documentation.
+Note: You need to install Go runtime. Look Golang documentation: [Download and Install Golang](https://go.dev/doc/install).
 
 Go to the "producer" directory:
 
-En la carpeta **keda/producer**
-- Exportar las variables del archivo *envkeda*
-- Ejecutar: go run producer.go
+In the `producer` directory:
 
-```bash
-DESA:(aksveu2pocd10)-s89684@Azure:/mnt/d/demo/keda/producer$ go run producer.go
-Event Hubs broker [kedans.servicebus.windows.net:9093]
-Event Hubs topic keda
-Waiting for ctrl+c
-sent message {"time":"Fri Nov 17 19:13:52 2023"} to partition 11 offset 49
-sent message {"time":"Fri Nov 17 19:13:53 2023"} to partition 14 offset 87
-```
+- Export the variables in the `envkeda`:
+
+    ```bash
+    export KAFKA_EVENTHUB_CONNECTION_STRING="Endpoint=sb://kedans.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=2XFSQIHGEeFzu2iuKK91+8pMNtXufhs/V+AEhOcPdkU="
+    export KAFKA_EVENTHUB_ENDPOINT=kedans.servicebus.windows.net:9093
+    export KAFKA_EVENTHUB_CONSUMER_GROUP=group_keda
+    export KAFKA_EVENTHUB_TOPIC=keda
+    export KAFKA_EVENTHUB_USERNAME="\$ConnectionString"
+    ```
+
+- Execute the Kafka producer application:
+    ```bash
+    go run producer.go
+    ```
+
+
+    ```bash
+    Event Hubs broker [kedans.servicebus.windows.net:9093]
+    Event Hubs topic keda
+    Waiting for ctrl+c
+    sent message {"time":"Fri Nov 17 19:13:52 2023"} to partition 11 offset 49
+    sent message {"time":"Fri Nov 17 19:13:53 2023"} to partition 14 offset 87
+    ```
 
 #### Resultado
 
